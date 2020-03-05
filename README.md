@@ -4,24 +4,24 @@
 
 |Biblioteca|Reads|Longitud máxima|Longitud media|Información|
 |-|-|-|-|-|
-|24D1|6005713|87962|1893.66|[plot](24D1.png)|
-|24D2|1421683|116707|7015.09|[plot](24D2.png)|
-|24D3|1645852|104870|6897.54|[plot](24D3.png)|
-|30D1|8177858|83868|1756.11|[plot](30D1.png)|
-|30D2-long|1046360|107468|7064.06|[plot](30D2-long.png)|
-|30D2-short|1396560|62193|2323.17|[plot](30D2-short.png)|
-|30D3-1|11020|117565|3284.33|[plot](30D3-1.png)|
-|30D3-2|4087|72870|2410.4|[plot](30D3-2.png)|
-|CR1_short|359360|76353|4172.8|[plot](CR1_short.png)|
-|CR2_long|1304985|117056|6919.88|[plot](CR2_long.png)|
-|CR2_short|2804001|99115|3242.37|[plot](CR2_short.png)|
-|CR3_long|1509190|115974|6718.48|[plot](CR3_long.png)|
+|24D1|6005713|87962|1893.66|[plot](images/24D1.png)|
+|24D2|1421683|116707|7015.09|[plot](images/24D2.png)|
+|24D3|1645852|104870|6897.54|[plot](images/24D3.png)|
+|30D1|8177858|83868|1756.11|[plot](images/30D1.png)|
+|30D2-long|1046360|107468|7064.06|[plot](images/30D2-long.png)|
+|30D2-short|1396560|62193|2323.17|[plot](images/30D2-short.png)|
+|30D3-1|11020|117565|3284.33|[plot](images/30D3-1.png)|
+|30D3-2|4087|72870|2410.4|[plot](images/30D3-2.png)|
+|CR1_short|359360|76353|4172.8|[plot](images/CR1_short.png)|
+|CR2_long|1304985|117056|6919.88|[plot](images/CR2_long.png)|
+|CR2_short|2804001|99115|3242.37|[plot](images/CR2_short.png)|
+|CR3_long|1509190|115974|6718.48|[plot](images/CR3_long.png)|
 
 Para el ensamble inicial se consideraron unicamente las lecturas de las bibliotecas CR1, CR2 y CR3, se empleó el programa Canu v1.8 [[ref](https://www.ncbi.nlm.nih.gov/pubmed/28298431)], obteniendo un ensamble que fue ordenado manualmente con base en similitud con el genoma de *Trichoderma reesei* QM6A [[ref](https://www.ncbi.nlm.nih.gov/nuccore/?term=CP016232%3ACP016238+%5Bpacc%5D)]. Este ensamble (referido como scf) mostró una contigüidad adecuada, logrando obtener 8 scaffolds correspondientes a los cromosomas de *Trichoderma atroviride*. No obstante, al mapear datos provenientes de RNAseq, se obtuvo una fracción elevada de lecturas no mapeadas que si lograban ser alineadas al genoma de referencia, específicamente a la secuencia correspondiente al contig_18.
 
 Con base en esta información, se procedió a reensamblar el genoma de *Trichoderma atroviride* IMI 206040 y de pulir dichos ensambles con lecturas Illumina y PacBio.
 
-El primer paso consistió en obtener un set de lecturas PacBio de alta calidad, para lo cual se emplearon únicamente las lecturas provenientes de las bibliotecas [24D2](24D2.png), [24D3](24D3.png), [30D2-long](30D2-long.png), [CR2_long](CR2_long.png) y [CR3_long](CR3_long.png) y fueron concatenadas, obteniendo
+El primer paso consistió en obtener un set de lecturas PacBio de alta calidad, para lo cual se emplearon únicamente las lecturas provenientes de las bibliotecas [24D2](images/24D2.png), [24D3](images/24D3.png), [30D2-long](images/30D2-long.png), [CR2_long](images/CR2_long.png) y [CR3_long](images/CR3_long.png) y fueron concatenadas, obteniendo
 ~ 45 Gbp para una profundidad aproximada de 1000X.
 
 Posteriormente las lecturas seleccionadas fueron sometidas a un proceso de corrección empleando Canu [[ref](https://www.ncbi.nlm.nih.gov/pubmed/28298431)]. Una vez que se obtuvo el dataset de lecturas corregidas, se procedió a la construcción de 3 ensambles adicionales, v3 empleando wtdbg2 [[ref](https://www.biorxiv.org/content/10.1101/530972v1)], v3.2 empleando Canu [[ref](https://www.ncbi.nlm.nih.gov/pubmed/28298431)] y v3.3 empleando racon [[ref](https://www.ncbi.nlm.nih.gov/pubmed/28100585)]. Las estadísticas de dichos ensambles son las siguientes:
@@ -79,22 +79,22 @@ Adicionalmente, se realizó un ejercicio similar, determinando el número de lec
 |Assembly|Polish|Unmapped reads|Dotplot|
 |-|-|-|-|
 |v1|raw|1747356||
-|scf|raw|1887134|[plot](LANGEBIO_scf.png)|
-||Pb-polish|1887852|[plot](LANGEBIO_scf.polish.png)|
-||Ilm-polish|1887236|[plot](LANGEBIO_scf.ipolish_edited.png)|
-||Pb-ilm-polish|1887830|[plot](LANGEBIO_scf.polish.ipolish_edited.png)|
-|v3|raw|1880944|[plot](LANGEBIO_v3.png)|
-||Pb-polish|1877492|[plot](LANGEBIO_v3.polish.png)|
-||Ilm-polish|1882324|[plot](LANGEBIO_v3.ipolish_edited.png)|
-||Pb-ilm-polish|1878088|[plot](LANGEBIO_v3.polish.ipolish_edited.png)|
-|v3.2|raw|1534676|[plot](LANGEBIO_v3.2.png)|
-||Pb-polish|1535208|[plot](LANGEBIO_v3.2.polish.png)|
-||Ilm-polish|1535076|[plot](LANGEBIO_v3.2.ipolish_edited.png)|
-||Pb-ilm-polish|1535124|[plot](LANGEBIO_v3.2.polish.ipolish_edited.png)|
-|v3.3|raw|1554104|[plot](LANGEBIO_v3.3.png)|
-||Pb-polish|1554076|[plot](LANGEBIO_v3.3.polish.png)|
-||Ilm-polish|1553850|[plot](LANGEBIO_v3.3.ipolish_edited.png)|
-||Pb-ilm-polish|1553740|[plot](LANGEBIO_v3.3.polish.ipolish_edited.png)|
+|scf|raw|1887134|[plot](images/LANGEBIO_scf.png)|
+||Pb-polish|1887852|[plot](images/LANGEBIO_scf.polish.png)|
+||Ilm-polish|1887236|[plot](images/LANGEBIO_scf.ipolish_edited.png)|
+||Pb-ilm-polish|1887830|[plot](images/LANGEBIO_scf.polish.ipolish_edited.png)|
+|v3|raw|1880944|[plot](images/LANGEBIO_v3.png)|
+||Pb-polish|1877492|[plot](images/LANGEBIO_v3.polish.png)|
+||Ilm-polish|1882324|[plot](images/LANGEBIO_v3.ipolish_edited.png)|
+||Pb-ilm-polish|1878088|[plot](images/LANGEBIO_v3.polish.ipolish_edited.png)|
+|v3.2|raw|1534676|[plot](images/LANGEBIO_v3.2.png)|
+||Pb-polish|1535208|[plot](images/LANGEBIO_v3.2.polish.png)|
+||Ilm-polish|1535076|[plot](images/LANGEBIO_v3.2.ipolish_edited.png)|
+||Pb-ilm-polish|1535124|[plot](images/LANGEBIO_v3.2.polish.ipolish_edited.png)|
+|v3.3|raw|1554104|[plot](images/LANGEBIO_v3.3.png)|
+||Pb-polish|1554076|[plot](images/LANGEBIO_v3.3.polish.png)|
+||Ilm-polish|1553850|[plot](images/LANGEBIO_v3.3.ipolish_edited.png)|
+||Pb-ilm-polish|1553740|[plot](images/LANGEBIO_v3.3.polish.ipolish_edited.png)|
 
 Como puede apreciarse, las rondas de pulido mejoraron significativamente la calidad del ensamble, con lo que puede proceder el andamiaje de la secuencia que vaya a ser seleccionada para su análisis.
 
