@@ -1,4 +1,5 @@
-#Reporte del ensamble y andamiaje del genoma de Trichoderma atroviride IMI206040 con lecturas PacBio e Illumina
+Reporte del ensamble y andamiaje del genoma de Trichoderma atroviride IMI206040 con lecturas PacBio e Illumina
+==============================================================================================================
 * Se inició el proceso de re-secuenciación del genoma de *Trichoderma atroviride* IMI206040 con 12 bibliotecas PacBio.
 * Se determinó la longitud y %G+C de las lecturas de cada biblioteca, observando que no todas las reacciones de secuenciación contaban con rendimientos adecuados, estimado como número de lecturas y longitud de las mismas
 
@@ -21,10 +22,15 @@ Para el ensamble inicial se consideraron unicamente las lecturas de las bibliote
 
 Con base en esta información, se procedió a reensamblar el genoma de *Trichoderma atroviride* IMI 206040 y de pulir dichos ensambles con lecturas Illumina y PacBio.
 
-El primer paso consistió en obtener un set de lecturas PacBio de alta calidad, para lo cual se emplearon únicamente las lecturas provenientes de las bibliotecas [24D2](images/24D2.png), [24D3](images/24D3.png), [30D2-long](images/30D2-long.png), [CR2_long](images/CR2_long.png) y [CR3_long](images/CR3_long.png) y fueron concatenadas, obteniendo
-~ 45 Gbp para una profundidad aproximada de 1000X.
+Preparación de un set de lecturas PacBio de alta calidad para el pulido de los ensambles obtenidos
+--------------------------------------------------------------------------------------------------------------
+Se emplearon únicamente las lecturas provenientes de las bibliotecas [24D2](images/24D2.png), [24D3](images/24D3.png), [30D2-long](images/30D2-long.png), [CR2_long](images/CR2_long.png) y [CR3_long](images/CR3_long.png), mismas que fueron concatenadas, obteniendo ~ 45 Gbp para una profundidad aproximada de 1000X.
 
-Posteriormente las lecturas seleccionadas fueron sometidas a un proceso de corrección empleando Canu [[ref](https://www.ncbi.nlm.nih.gov/pubmed/28298431)]. Una vez que se obtuvo el dataset de lecturas corregidas, se procedió a la construcción de 3 ensambles adicionales, v3 empleando wtdbg2 [[ref](https://www.biorxiv.org/content/10.1101/530972v1)], v3.2 empleando Canu [[ref](https://www.ncbi.nlm.nih.gov/pubmed/28298431)] y v3.3 empleando racon [[ref](https://www.ncbi.nlm.nih.gov/pubmed/28100585)]. Las estadísticas de dichos ensambles son las siguientes:
+Posteriormente las lecturas seleccionadas fueron sometidas a un proceso de corrección empleando Canu [[ref](https://www.ncbi.nlm.nih.gov/pubmed/28298431)].
+
+Generación de ensambles alternativos
+------------------------------------
+Una vez que se obtuvo el dataset de lecturas corregidas, se procedió a la construcción de 3 ensambles adicionales, v3 empleando wtdbg2 [[ref](https://www.biorxiv.org/content/10.1101/530972v1)], v3.2 empleando Canu [[ref](https://www.ncbi.nlm.nih.gov/pubmed/28298431)] y v3.3 empleando racon [[ref](https://www.ncbi.nlm.nih.gov/pubmed/28100585)]. Las estadísticas de dichos ensambles son las siguientes:
 |Metric|v1|scf|v3|v3.2|v3.3|
 |------|--|---|--|----|----|
 |Assembly length|36.1437|36.3064|45.2236|36.3359|43.4588|
@@ -38,9 +44,41 @@ Posteriormente las lecturas seleccionadas fueron sometidas a un proceso de corre
 |Contigs >1e4 bp|22|19|363|24|320|
 |Length  >1e4 bp|36.0967|36.2807|44.5593|36.3359|43.4453|
 
-Posteriormente se procedió a pulir dichos ensambles con las lecturas PacBio seleccionadas previamente empleando racon [[ref](https://www.ncbi.nlm.nih.gov/pubmed/28100585)], y con lecturas Illumina empleando ntedit [[ref](https://www.ncbi.nlm.nih.gov/pubmed/31095290)]. Los ensambles obtenidos tras pulir con lecturas PacBio fueron nombrados pb-polish, mientras que los ensambles pulidos con lecturas Illumina fueron nombrados ilm-polish, adicionalmente se realizaron pulidos dobles, con lecturas PacBio e Illumina pb-ilm-polish.
+Pulido de los ensambles generados
+=================================
+Los ensambles generados fueron pulidos con lecturas PacBio empleando racon [[ref](https://www.ncbi.nlm.nih.gov/pubmed/28100585)], y con lecturas Illumina empleando ntedit [[ref](https://www.ncbi.nlm.nih.gov/pubmed/31095290)].
 
-Para evaluar el efecto de las rondas de pulido, se procedió a determinar el número de lecturas RNAseq que no lograron ser alineadas a los ensambles obtenidos pero que si podían ser alineadas a los contigs presentes en el ensamble de referencia. A continuación se muestran los resultados obtenidos:
+Los ensambles obtenidos tras pulir con lecturas PacBio fueron nombrados pb-polish, mientras que los ensambles pulidos con lecturas Illumina fueron nombrados ilm-polish, adicionalmente se realizaron pulidos dobles, con lecturas PacBio e Illumina denominados pb-ilm-polish.
+
+Evaluación de los ensambles usando lecturas Illumina de DNAseq
+--------------------------------------------------------------
+Para determinar el efecto de las distintas estrategias de pulido, así como la calidad propia de los nuevos ensambles obtenidos, se emplearon lecturas Illumina de DNAseq, las cuales fueron alineadas a las secuencias generadas. Posteriormente se determinó que fracción de dichas lecturas alineaba adecuadamente a las secuencias (`samtools view -f3`) y que fracción de las lecturas no fue alineada (`samtools view -f12`). Dichas fracciones fueron calculadas tanto para los ensambles generados como para el ensamble de referencia. Asimismo, se determinó que lecturas había en común entre los alineamientos de cada secuencia generada y los alineamientos del genoma de referencia, es decir, cuanto mayor fuera el porcentaje de lecturas adecuadamente pareadas entre el alineamiento de los nuevos ensambles y el alineamiento del genoma de referencia, menos información se estaría perdiendo para dicho ensamble. Del mismo modo, cuanto menor fuera el porcentaje de lecturas compartidas no adecuadamente pareadas, menos información se estaría perdiendo en los nuevos ensambles.
+
+
+|Sequence|Status|Unmapped read pairs|Shared|Unique|%Shared|%Unique|Properly mapped read pairs|Shared|Unique|%Shared|%Unique|
+|-|-|-|-|-|-|-|-|-|-|-|-|
+|Trichoderma atroviride v1|raw|1747356|-|-|-|-|-|-|-|-|-|
+|Trichoderma atroviride scf|raw|1887134|1730276|156858|99.02|8.31|14674710|14654290|20420|97.82|0.14|
+||Pb-polish|1887852|1730252|157600|99.02|8.35|14673524|14652466|21058|97.81|0.14|
+||Ilm-polish|1887236|1730660|156576|99.04|8.30|14674120|14654272|19848|97.82|0.14|
+||Pb-ilm-polish|1887830|1730424|157406|99.03|8.34|14673194|14652436|20758|97.81|0.14|
+|Trichoderma atroviride v3|raw|1880944|1729154|151790|98.96|8.07|14685178|14663290|21888|97.88|0.15|
+||Pb-polish|1877492|1723216|154276|98.62|8.22|14688178|14660288|27890|97.86|0.19|
+||Ilm-polish|1882324|1730530|151794|99.04|8.06|14684120|14663406|20714|97.88|0.14|
+||Pb-ilm-polish|1878088|1723746|154342|98.65|8.22|14687756|14660338|27418|97.86|0.19|
+|Trichoderma atroviride v3.2|raw|1534676|1534292|384|87.81|0.03|15219110|14978430|240680|99.98|1.58|
+||Pb-polish|1535208|1534812|396|87.84|0.03|15218650|14978414|240236|99.98|1.58|
+||Ilm-polish|1535076|1534754|322|87.83|0.02|15219546|14979136|240410|99.99|1.58|
+||Pb-ilm-polish|1535124|1534982|142|87.85|0.01|15219434|14979214|240220|99.99|1.58|
+|Trichoderma atroviride v3.3|raw|1554104|1535082|19022|87.85|1.22|15194030|14955302|238728|99.83|1.57|
+||Pb-polish|1554076|1535072|19004|87.85|1.22|15194452|14955874|238578|99.83|1.57|
+||Ilm-polish|1553850|1535104|18746|87.85|1.21|15193558|14955598|237960|99.83|1.57|
+||Pb-ilm-polish|1553740|1535008|18732|87.85|1.21|15194692|14956034|238658|99.83|1.57|
+
+
+Evaluación de los ensambles usando lecturas Illumina de DNAseq
+--------------------------------------------------------------
+Para evaluar el efecto de las rondas de pulido, se procedió a determinar el número de lecturas RNAseq (Illumina) que no lograron ser alineadas a los ensambles obtenidos pero que si podían ser alineadas a los contigs presentes en el ensamble de referencia. A continuación se muestran los resultados obtenidos:
 
 |Contig|Length|scf||||v3||||v3.2||||v3.3||||
 |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
@@ -75,32 +113,13 @@ Para evaluar el efecto de las rondas de pulido, se procedió a determinar el nú
 |contig_28|2007903|1985|2057|1968|1967|5216|5313|5189|5215|618354|434|365|359|1881|1967|1849|1864|
 |contig_29|1544261|2120|2487|2115|2144|2129|2130|2117|2117|717281|2052|2085|2089|2095|1634|2076|1617|
 
-Adicionalmente, se realizó un ejercicio similar, determinando el número de lecturas Illumina que no lograban ser alineadas a los ensambles obtenidos. A continuación se muestran los resultados obtenidos
-|Assembly|Polish|Unmapped reads|Dotplot|
-|-|-|-|-|
-|v1|raw|1747356||
-|scf|raw|1887134|[plot](images/LANGEBIO_scf.png)|
-||Pb-polish|1887852|[plot](images/LANGEBIO_scf.polish.png)|
-||Ilm-polish|1887236|[plot](images/LANGEBIO_scf.ipolish_edited.png)|
-||Pb-ilm-polish|1887830|[plot](images/LANGEBIO_scf.polish.ipolish_edited.png)|
-|v3|raw|1880944|[plot](images/LANGEBIO_v3.png)|
-||Pb-polish|1877492|[plot](images/LANGEBIO_v3.polish.png)|
-||Ilm-polish|1882324|[plot](images/LANGEBIO_v3.ipolish_edited.png)|
-||Pb-ilm-polish|1878088|[plot](images/LANGEBIO_v3.polish.ipolish_edited.png)|
-|v3.2|raw|1534676|[plot](images/LANGEBIO_v3.2.png)|
-||Pb-polish|1535208|[plot](images/LANGEBIO_v3.2.polish.png)|
-||Ilm-polish|1535076|[plot](images/LANGEBIO_v3.2.ipolish_edited.png)|
-||Pb-ilm-polish|1535124|[plot](images/LANGEBIO_v3.2.polish.ipolish_edited.png)|
-|v3.3|raw|1554104|[plot](images/LANGEBIO_v3.3.png)|
-||Pb-polish|1554076|[plot](images/LANGEBIO_v3.3.polish.png)|
-||Ilm-polish|1553850|[plot](images/LANGEBIO_v3.3.ipolish_edited.png)|
-||Pb-ilm-polish|1553740|[plot](images/LANGEBIO_v3.3.polish.ipolish_edited.png)|
-
 Como puede apreciarse, las rondas de pulido mejoraron significativamente la calidad del ensamble, con lo que puede proceder el andamiaje de la secuencia que vaya a ser seleccionada para su análisis.
 
-#Anexos
+Anexos
+======
 
-##Comandos para los ensambles obtenidos
+Comandos para los ensambles obtenidos
+-------------------------------------
 
 * Ensamble scf
 ```bash
@@ -206,6 +225,29 @@ cd /home/vflores/LUSTRE/Trichoderma_atroviride_scaffolding/scaf/run_07/illumina_
 /home/vflores/bin/ntedit -t 16 -f Trichoderma_atroviride_LANGEBIO_v3.3.polish.fasta -r tatro_k40.bf -b Trichoderma_atroviride_LANGEBIO_v3.3.polish.ipolish -z 10000
 ```
 
+* Alineamiento de lecturas Illumina DNAseq sobre los ensambles construidos
+```bash
+for file_name in $(ls | grep fai$ | perl -pe 's/\.fai//')
+do
+  base_name=$(echo $file_name | perl -pe 's/\.fa$//;s/\.fasta$//')
+  bwa index $file_name
+  bwa mem -t 8 $file_name R1P.fastq.gz R2P.fastq.gz > ${base_name}.sam
+	samtools view -@ 8 -h -b -o ${base_name}_tmp.bam ${base_name}.sam
+	samtools sort -@ 8 -o ${base_name}.bam ${base_name}_tmp.bam
+	samtools index ${base_name}.bam
+	samtools view -f 12 -@ 8 -h -b -o ${base_name}_unmapped.bam ${base_name}.bam
+	samtools view -f 3 -@ 8 -h -b -o ${base_name}_properly_paired.bam ${base_name}.bam
+	samtools view ${base_name}_properly_paired.bam | cut -f1 | sort -V | uniq > ${base_name}_properly_paired.id_list
+	samtools view ${base_name}_unmapped.bam | cut -f1 | sort -V | uniq > ${base_name}_unmapped.id_list
+	total_reads=$(cat $base_name.id_list | wc -l | awk 'print $1*2')
+	proper_shared_reads=$(grep -wFf ${base_name}_properly_paired.id_list Trichoderma_atroviride_IMI_206040_properly_paired.id_list | wc -l | awk '{print $1*2}')
+	proper_exclusive_reads=$(echo -e "$total_reads\t$proper_shared_reads" | awk 'BEGIN{FS="\t"}{print $1-$2}')
+	unmapped_shared_reads=$(grep -wFf ${base_name}_unmapped.id_list Trichoderma_atroviride_IMI_206040_unmapped.id_list | wc -l | awk '{print $1*2}')
+	unmapped_exclusive_reads=$(echo -e "$total_reads\t$unmapped_shared_reads" | awk 'BEGIN{FS="\t"}{print $1-$2}')
+	echo -e "$base_name\t$unmapped_shared_reads\t$unmapped_exclusive_reads\t$proper_shared_reads\t$proper_exclusive_reads" >> mapping_summary.tsv
+done
+```
+
 * Alineamiento de secuencias de RNAseq usando hisat2
 ```bash
 #PBS -q default
@@ -264,19 +306,7 @@ done
 rm -rf *.sam *_tmp.bam
 ```
 
-* Alineamiento de lecturas Illumina DNAseq sobre los ensambles construidos
-```bash
-for file_name in $(ls | grep fai$ | perl -pe 's/\.fai//')
-do
-  base_name=$(echo $file_name | perl -pe 's/\.fa$//;s/\.fasta$//')
-  bwa index $file_name
-  bwa mem -t 8 $file_name R1P.fastq.gz R2P.fastq.gz > ${base_name}.sam
-	samtools view -@ 8 -h -b -o ${base_name}_tmp.bam ${base_name}.sam
-	samtools sort -@ 8 -o ${base_name}.bam ${base_name}_tmp.bam
-	samtools index ${base_name}.bam
-	samtools idxstats ${base_name}.bam | tail -n1 | awk '{print $4}'
-done
-```
+
 
 ## Datos de calidad de las secuencias Illumina con las que se realizaron las rondas de pulido
 |Dataset|Forward|Reverse|
