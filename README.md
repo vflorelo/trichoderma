@@ -1,5 +1,8 @@
 Reporte del ensamble y andamiaje del genoma de Trichoderma atroviride IMI206040 con lecturas PacBio e Illumina
 ==============================================================================================================
+
+[![Join the chat at https://gitter.im/vflorelo-trichoderma/community](https://badges.gitter.im/vflorelo-trichoderma/community.svg)](https://gitter.im/vflorelo-trichoderma/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 * Se inició el proceso de re-secuenciación del genoma de *Trichoderma atroviride* IMI206040 con 12 bibliotecas PacBio.
 * Se determinó la longitud y %G+C de las lecturas de cada biblioteca, observando que no todas las reacciones de secuenciación contaban con rendimientos adecuados, estimado como número de lecturas y longitud de las mismas
 
