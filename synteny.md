@@ -97,7 +97,7 @@ else
   exit 0
 fi
 ```
-Al final, se conservaron 7498 listones para circos, los cuales fueron seleccionados manualmente con base en la informacion generada previamente con [minimap2](synteny_files/reesei_atroviride_minimap2.png).
+Al final, se conservaron 7498 listones para circos, los cuales fueron seleccionados manualmente con base en la informacion generada previamente con [minimap2](synteny_files/reesei_atroviride.png).
 A continuacion se enlistan los archivos de configuracion para circos, asi como el producto final que muestra la sintenia observada a nivel de aminoacidos entre los genomas comparados
 
 * [circos.conf](synteny_files/circos.conf)
